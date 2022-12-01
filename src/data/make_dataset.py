@@ -1,15 +1,21 @@
 # libraries
+import os
 import pandas as pd
 from IPython.display import display
 from sklearn.model_selection import train_test_split
 
 
-# import data and file na with mean
-def import_clean_data(data_path):
+# import data and file NAs with mean
+def import_clean_data(dataset_name,extension):
     """
     :param data_path:
+    :extension: file extension
     """
-    data = pd.read_csv(data_path)
+    data_path = os.path.join(os.path.dirname(__file__), "data/raw", dataset_name+".extension")
+    if extension == "data":
+        data = pd.read_table(data_path)
+    else:
+        data = pd.read_csv(data_path)
     # count na values
     # replace missing values by mean
     new_data = data.fillna(data.mean())
