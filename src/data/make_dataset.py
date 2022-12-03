@@ -1,10 +1,12 @@
 # libraries
 import os
 import pandas as pd
+import numpy as np
 from IPython.display import display
 from sklearn.model_selection import train_test_split
 from definitions import ROOT_DIR
 from pathlib import Path
+from sklearn.decomposition import PCA
 
 
 def import_clean_data(dataset_name):
@@ -44,8 +46,29 @@ def standardizer(data):
     """
     for col in data.columns:
         if col != 'train':
-            data[col] = (data[col]-data[col].mean())/data[col].std()
+            data[col] = (data[col] - data[col].mean()) / data[col].std()
     return data
+
+
+def feature_select(data, label_column_name, var_thresh=0.95):
+    """
+    This function does feature selection on the data using PCA. We set a threshold on the pourcentage of variance that
+    should be explained by the selected components. That is how we determine which components to keep.
+    :param data: Pandas dataframe containing input data
+    :param label_column_name: Name of the column that contains labels
+    :param var_thresh: Threshold to use on the poucentage of variance explained by the selected components. It should be
+     a number between 0 and 1.Default is 0.95 .
+    :return: Pandas dataframe containing the selected features and labels.
+    """
+
+    labels = data[label_column_name]
+    data_nolabel = data.drop(label_column_name, axis=1)
+    pca = PCA()
+    pca.fit(data_nolabel)
+    explained_var = np.cumsum(pca.explained_variance_ratio_)
+    n_features = np.shape(data_nolabel)[1] - sum(explained_var >= var_thresh)
+    new_data = pca.fit_transform(data_nolabel)[:, :n_features]
+    return pd.concat([pd.DataFrame(new_data), labels], axis=1)
 
 
 def split_data_train_test(data, label_column_name, test_size=0.3, random_state=42):
@@ -71,5 +94,3 @@ def split_data_train_test(data, label_column_name, test_size=0.3, random_state=4
                                                             random_state=random_state)
 
     return X_train, X_test, y_train, y_test
-
-
