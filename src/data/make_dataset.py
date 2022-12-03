@@ -61,8 +61,13 @@ def feature_select(data, label_column_name, var_thresh=0.95):
     :return: Pandas dataframe containing the selected features and labels.
     """
 
-    labels = data[label_column_name]
-    data_nolabel = data.drop(label_column_name, axis=1)
+    if "train" in data.columns:
+        labels=data[[label_column_name,'train']]
+        data_nolabel = data.drop([label_column_name,'train'], axis=1)
+    else:
+        labels = data[label_column_name]
+        data_nolabel = data.drop(label_column_name, axis=1)
+    
     pca = PCA()
     pca.fit(data_nolabel)
     explained_var = np.cumsum(pca.explained_variance_ratio_)
