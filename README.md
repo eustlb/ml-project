@@ -43,3 +43,4 @@ Here, we are trying to predict the variable **lpsa** from the 13 others.
 
 # Ressources
 [Machine learning project file structure.](https://neptune.ai/blog/how-to-organize-deep-learning-projects-best-practices)
+[Scikit-learn documentation.](https://scikit-learn.org/stable/)
