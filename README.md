@@ -17,6 +17,7 @@ Machine learning development project at IMT Atlantique.
     │   │   └── train_model.py    <- Script to train a model.
     │   │
     │   └── visualization         
+    │       └── performances.py    <- Script to train evaluate linear regression performances.
     │
     ├── tests                   
     │   └── make_dataset_test.py  <- Unit test to check data preprocessing.
@@ -25,7 +26,7 @@ Machine learning development project at IMT Atlantique.
     │
     ├── main.ipynb                <- Notebook to run the code.
     │
-    ├── main.py                   <- Notebook to run the code.
+    ├── main.py                   
     │
     └── README.md
 
