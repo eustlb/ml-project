@@ -33,7 +33,7 @@ def import_clean_data(dataset_name):
                 data[col] = data[col].astype(float)
 
     # replace missing values by mean
-    new_data = data.fillna(data.mean())
+    new_data = data.fillna(data.mean(numeric_only=True))
     return new_data
 
 
@@ -56,23 +56,23 @@ def feature_select(data, label_column_name, var_thresh=0.95):
     should be explained by the selected components. That is how we determine which components to keep.
     :param data: Pandas dataframe containing input data
     :param label_column_name: Name of the column that contains labels
-    :param var_thresh: Threshold to use on the poucentage of variance explained by the selected components. It should be
+    :param var_thresh: Threshold to use on the percentage of variance explained by the selected components. It should be
      a number between 0 and 1.Default is 0.95 .
     :return: Pandas dataframe containing the selected features and labels.
     """
 
     if "train" in data.columns:
-        labels=data[[label_column_name,'train']]
-        data_nolabel = data.drop([label_column_name,'train'], axis=1)
+        labels = data[[label_column_name, 'train']]
+        data_no_label = data.drop([label_column_name, 'train'], axis=1)
     else:
         labels = data[label_column_name]
-        data_nolabel = data.drop(label_column_name, axis=1)
+        data_no_label = data.drop(label_column_name, axis=1)
     
     pca = PCA()
-    pca.fit(data_nolabel)
+    pca.fit(data_no_label)
     explained_var = np.cumsum(pca.explained_variance_ratio_)
-    n_features = np.shape(data_nolabel)[1] - sum(explained_var >= var_thresh)
-    new_data = pca.fit_transform(data_nolabel)[:, :n_features]
+    n_features = np.shape(data_no_label)[1] - sum(explained_var >= var_thresh)
+    new_data = pca.fit_transform(data_no_label)[:, :n_features]
     return pd.concat([pd.DataFrame(new_data), labels], axis=1)
 
 

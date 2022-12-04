@@ -1,6 +1,34 @@
 # ml-project
 Machine learning development project at IMT Atlantique.
 
+# Project structure
+
+    ml-project
+    ├── data             
+    │   └── raw                   <- Raw datasets are stored here.
+    │
+    ├── src 
+    │   ├── __init__.py           <- Makes src a python module.    
+    │   │
+    │   ├── data          
+    │   │   └── make_dataset.py   <- Script to preprocess datasets.
+    │   │
+    │   ├── models        
+    │   │   └── train_model.py    <- Script to train a model.
+    │   │
+    │   └── visualization         
+    │
+    ├── tests                   
+    │   └── make_dataset_test.py  <- Unit test to check data preprocessing.
+    │
+    ├── definitions.py            <- Define project variables such as ROOT_DIR.
+    │
+    ├── main.ipynb                <- Notebook to run the code.
+    │
+    ├── main.py                   <- Notebook to run the code.
+    │
+    └── README.md
+
 # Datasets
 ## Boston Housing
 Downloaded from [Kaggle](https://www.kaggle.com/datasets/altavish/boston-housing-dataset) 

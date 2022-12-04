@@ -7,14 +7,14 @@ from sklearn.ensemble import RandomForestRegressor, AdaBoostRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.model_selection import GridSearchCV, ShuffleSplit
 
-default_parameters = {'LinearRegression' : {} , 
-    'SVMRegressor' : {'kernel':['linear', 'rbf', 'sigmoid', 'poly'], 
+default_parameters = {
+    'LinearRegressor': {},
+    'SVMRegressor': {'kernel': ['linear', 'rbf', 'sigmoid', 'poly'],
                     'C'     :[1, 10], 
                     'degree': [2, 3],
                     'gamma' : ['scale', 'auto']
                     },
-    'SGDRegressor' : {'loss':['hinge', 'log', 'modified_huber', 'squared_hinge', 'perceptron'], 
-                    'penalty':['l1', 'l2'], 
+    'SGDRegressor' : {'penalty':['l1', 'l2'],
                     'fit_intercept' : [True,False],
                     },
     'RandomForestRegressor' : {'n_estimators':[10,20,50,70,100], 
@@ -65,7 +65,7 @@ def train_model(model_name: str, parameters: dict, X: np.ndarray, y: np.ndarray,
     """
 
     if parameters is None or parameters == {}:
-        parameters=default_parameters[model_name]
+        parameters = default_parameters[model_name]
 
     model = build_model(model_name)
     cvp = ShuffleSplit(n_splits=n_splits)
